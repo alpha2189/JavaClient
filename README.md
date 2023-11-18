@@ -1,2 +1,2 @@
 # JavaClient
-Java client in order to add new client and resources in Keycloak
+Java client in order to add,update and delete, client and resources in a Keycloak Realm.
