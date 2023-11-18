@@ -1,0 +1,72 @@
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.representations.idm.ClientRepresentation;
+
+public class KeycloakPistisClient {
+
+    public static void main(String[] args) {
+        // Replace these values with your Keycloak admin credentials and server URL
+        String serverUrl = "https://auth.pistis.pikei.xyz/auth";
+        String realm = "PISTIS";
+        String adminUsername = "xxxx";
+        String adminPassword = "xxxx";
+
+        // Create a Keycloak admin client
+        Keycloak keycloak = KeycloakBuilder.builder()
+                .serverUrl(serverUrl)
+                .realm(realm)
+                .username(adminUsername)
+                .password(adminPassword)
+                .clientId("pistis-org-client-sample or 00a0a1b5-42d4-4172-8124-64794c5cc00f")
+                .build();
+
+        // Uncomment and run only one of the following methods based on your operation
+
+        // Example: Create a new resource for the "pistis" client
+        // createResource(keycloak, "pistis", "new-resource-id");
+
+        // Example: Update an existing resource for the "pistis" client
+        // updateResource(keycloak, "pistis", "existing-resource-id");
+
+        // Example: Delete an existing resource for the "pistis" client
+        // deleteResource(keycloak, "pistis", "existing-resource-id");
+
+        // Close the Keycloak admin client
+        keycloak.close();
+    }
+
+    private static void createResource(Keycloak keycloak, String clientName, String resourceId) {
+        // Create a new client representation
+        ClientRepresentation clientRepresentation = keycloak.realm("PISTIS").clients().get(clientName).toRepresentation();
+
+        // Create a new resource representation
+        // Modify resource attributes as needed
+        // ...
+
+        // Call the Keycloak Admin API to create the resource
+        keycloak.realm("PISTIS").clients().get(clientRepresentation.getId()).resources().create(resourceRepresentation);
+        System.out.println("Resource created for client " + clientName + ": " + resourceId);
+    }
+
+    private static void updateResource(Keycloak keycloak, String clientName, String resourceId) {
+        // Retrieve the existing resource representation
+        ClientRepresentation clientRepresentation = keycloak.realm("PISTIS").clients().get(clientName).toRepresentation();
+        ResourceRepresentation resourceRepresentation = keycloak.realm("your-realm").clients().get(clientRepresentation.getId()).resources().get(resourceId).toRepresentation();
+
+        // Update the resource representation as needed
+        // resourceRepresentation.setSomeAttribute("updated-value");
+
+        // Call the Keycloak Admin API to update the resource
+        keycloak.realm("PISTIS").clients().get(clientRepresentation.getId()).resources().get(resourceId).update(resourceRepresentation);
+        System.out.println("Resource updated for client " + clientName + ": " + resourceId);
+    }
+
+    private static void deleteResource(Keycloak keycloak, String clientName, String resourceId) {
+        // Retrieve the existing resource representation
+        ClientRepresentation clientRepresentation = keycloak.realm("PISTIS").clients().get(clientName).toRepresentation();
+
+        // Call the Keycloak Admin API to delete the resource
+        keycloak.realm("PISTIS").clients().get(clientRepresentation.getId()).resources().get(resourceId).remove();
+        System.out.println("Resource deleted for client " + clientName + ": " + resourceId);
+    }
+}
