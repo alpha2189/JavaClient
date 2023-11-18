@@ -7,20 +7,20 @@ public class KeycloakClientExample {
     public static void main(String[] args) {
         // Configure Keycloak Admin Client
         Keycloak keycloak = KeycloakBuilder.builder()
-                .serverUrl("https://auth.pistis.pikei.xyz/auth")
+                .serverUrl("{add your server url}")
                 .realm("PISTIS")
                 .username("admin-username")
                 .password("admin-password")
-                .clientId("pistis-org-client-sample or 00a0a1b5-42d4-4172-8124-64794c5cc00f")
+                .clientId("{add your client name or client id")
                 .build();
 
-        // Example: Create a new client named PISTIS
+        // Example: Create a new client 
         createClient(keycloak, "XXXXXXXX");
 
-        // Example: Update the client named PISTIS
+        // Example: Update the client 
         updateClient(keycloak, "XXXXXXXX");
 
-        // Example: Delete the client named PISTIS
+        // Example: Delete the client 
         deleteClient(keycloak, "XXXXXXXX");
 
         // Close the Keycloak client
@@ -34,26 +34,26 @@ public class KeycloakClientExample {
         clientRepresentation.setDirectAccessGrantsEnabled(true); // Enable direct access grants if needed
 
         // Call the Keycloak Admin API to create the client
-        keycloak.realm("PISTIS").clients().create(clientRepresentation);
+        keycloak.realm("{your REALM}").clients().create(clientRepresentation);
         System.out.println("Client created: " + clientName);
     }
 
     private static void updateClient(Keycloak keycloak, String clientId) {
         // Retrieve the existing client representation
-        ClientRepresentation clientRepresentation = keycloak.realm("PISTIS").clients().get(clientId).toRepresentation();
+        ClientRepresentation clientRepresentation = keycloak.realm("{your REALM}").clients().get(clientId).toRepresentation();
 
         // Update the client representation as needed
         clientRepresentation.setDescription("Updated description for XXXXXXXX client");
         clientRepresentation.setEnabled(true);
 
         // Call the Keycloak Admin API to update the client
-        keycloak.realm("PISTIS").clients().get(clientId).update(clientRepresentation);
+        keycloak.realm("{your REALM}").clients().get(clientId).update(clientRepresentation);
         System.out.println("Client updated: " + clientId);
     }
 
     private static void deleteClient(Keycloak keycloak, String clientId) {
         // Call the Keycloak Admin API to delete the client
-        keycloak.realm("PISTIS").clients().get(clientId).remove();
+        keycloak.realm("{your REALM}").clients().get(clientId).remove();
         System.out.println("Client deleted: " + clientId);
     }
 }
